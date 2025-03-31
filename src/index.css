@@ -1,0 +1,47 @@
+:root {
+  font-family: var(--font-family);
+  --main: #101828;
+	--gray: #8d929a;
+	--gray-light: #dadde1;
+	--badges: #f2f4f7;
+	--inputs: #f7f7f7;
+	--white: #fff;
+	--button: #3470ff;
+	--button-hover: #0b44cd;
+  --font-family: "Manrope", sans-serif;
+  --second-family: "Inter", sans-serif;
+}
+
+body {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  place-items: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+button {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}

@@ -1,0 +1,40 @@
+.homeDiv {
+    padding: 436px 328.5px 60px;
+    text-align: center;
+    color: var(--white);
+    background-image: url(/src/assets/background-car-1x.webp);
+    & h1 {
+        font-weight: 700;
+        font-size: 60px;
+        line-height: 1.2;
+        margin-bottom: 16px;
+    }
+    & h2 {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 1.33;
+        margin-bottom: 40px;
+    }
+    & button {
+        border-radius: 12px;
+        width: 276px;
+        height: 44px;
+        background: var(--button);
+        border: none;
+        outline: none;
+        font-family: var(--font-family);
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.25;
+        color: var(--white);
+    }
+}
+
+@media screen and (min-width: 320px) and (min-device-pixel-ratio: 2),
+screen and (min-resolution: 192dpi),
+screen and (min-resolution: 2dppx) {
+    .homeDiv {
+        background-image: url(/src/assets/background-car-2x.webp);
+        background-size: contain;
+    } 
+}

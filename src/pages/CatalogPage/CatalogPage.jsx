@@ -8,7 +8,7 @@ const CatalogPage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchCarBrands());
-        dispatch(fetchAllCars());
+        // dispatch(fetchAllCars());
     }, [dispatch]);
     return (
         <>

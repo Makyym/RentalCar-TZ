@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCarBrands } from "./operations.js";
+import { fetchAllCars, fetchCarBrands } from "./operations.js";
 
 
 const initialState = {
@@ -33,7 +33,15 @@ const slice = createSlice({
                 state.isError = null;
                 state.carBrands = payload;
             })
-    },
-});
+            .addCase(fetchAllCars.pending, handlePending)
+            .addCase(fetchAllCars.rejected, handleRejected)
+            .addCase(fetchAllCars.fulfilled, (state, {payload}) => {
+                state.isLoading = false;
+                state.isError = null;
+                state.carsArray = payload;
+            })
+        },
+    }
+);
 
 export const carsReducer = slice.reducer;

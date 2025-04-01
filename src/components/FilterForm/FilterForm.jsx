@@ -1,11 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { selectFilters } from "../../redux/filters/selectors.js";
 import { useState } from "react";
 import { selectCarBrands, selectCarPrice } from "../../redux/cars/selectors.js";
 import s from "./FilterForm.module.css";
 import { AnimatePresence, motion } from "framer-motion";
+import { setFilters } from "../../redux/filters/slice.js";
 
 const variants = {
     hidden: { opacity: 0, y: -10 },
@@ -14,13 +15,14 @@ const variants = {
 };
 
 const FilterForm = () => {
+    const dispatch = useDispatch();
     const [carBrandsList, setCarBrandsList] = useState(false);
     const [carPriceList, setCarPriceList] = useState(false);
     const {brand, rentalPrice, minMileage, maxMileage} = useSelector(selectFilters);
     const carBrands = useSelector(selectCarBrands);
     const carsPriceArray = useSelector(selectCarPrice);
-    const [carBrand, setCarBrand] = useState("Choose a brand");
-    const [rentalCarPrice, setRentalCarPrice] = useState("Choose a price");
+    const [carBrand, setCarBrand] = useState(brand ?? "Choose a brand");
+    const [rentalCarPrice, setRentalCarPrice] = useState(rentalPrice ?? "Choose a price");
     const initialValues = {
         brand: brand ?? "",
         rentalPrice: rentalPrice ?? "",
@@ -35,15 +37,25 @@ const FilterForm = () => {
             .typeError('Enter a number')
             .min(0, 'Value must be greater than 0'),
         });
-        const onSubmit = (values) => {
-            if (carBrand !== "Choose a brand") {
-                values.brand = carBrand;
-            }
-            if (rentalCarPrice !== "Choose a price") {
-                values.rentalPrice = rentalCarPrice;
-            }
-            console.log('Значения формы:', values);
-        };
+        const normalizeValues = (values) => {
+            return Object.fromEntries(
+                Object.entries(values).map(([key, value]) => [
+                key,
+                (typeof value === 'string' && value.trim() === '') ? null : value,
+                ])
+            );
+            };          
+            const onSubmit = (values) => {
+                const updatedValues = {
+                    ...values,
+                    brand: carBrand !== "Choose a brand" ? carBrand : values.brand,
+                    rentalPrice: rentalCarPrice !== "Choose a price" ? rentalCarPrice : values.rentalPrice,
+                };
+                const payload = normalizeValues(updatedValues);
+                console.log('Нормализованные значения формы:', payload);
+                dispatch(setFilters(payload));
+                // sendPayloadToBackend(payload);
+            };
         const carBrandsIsVisible = () => {
             setCarBrandsList(!carBrandsList);
         };

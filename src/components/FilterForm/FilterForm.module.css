@@ -1,0 +1,174 @@
+.form {
+    display: flex;
+    gap: 16px;
+    margin-top: 84px;
+    justify-content: center;
+    align-items: end;
+    & p {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 1.33;
+        color: var(--gray);
+        margin-bottom: 8px;
+    }
+}
+
+.brandSpan {
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 12px 16px;
+    width: 204px;
+    height: 44px;
+    background-color: var(--inputs);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--main);
+    & svg {
+        margin-left: auto;
+        transition: transform 0.2s ease-in-out;
+    }
+}
+
+.svg {
+    transform: scaleY(-1);
+}
+
+.minLabel {
+    display: flex;
+    border-right: 1px solid var(--gray-light);
+    border-radius: 12px 0 0 12px;
+    width: 160px;
+    height: 44px;
+    padding: 12px 24px;
+    background-color: var(--inputs);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--main);
+    font-family: var(--font-family);
+    & input {
+        width: 70px;
+        margin-left: 4px;
+        height: 20px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+}
+
+.maxLabel {
+    display: flex;
+    border-radius: 0 12px 12px 0;
+    width: 160px;
+    height: 44px;
+    padding: 12px 24px;
+    background-color: var(--inputs);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--main);
+    font-family: var(--font-family);
+    & input {
+        width: 70px;
+        margin-left: 4px;
+        height: 20px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+    }
+}
+
+.priceDiv {
+    display: flex;
+}
+
+.searchBtn {
+    border-radius: 12px;
+    padding: 12px 51px;
+    width: 156px;
+    height: 44px;
+    background-color: var(--button);
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--white);
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.searchBtn:hover {
+    background-color: var(--button-hover);
+}
+
+.ul {
+    position: absolute;
+    top: 72px;
+    border: 1px solid var(--inputs);
+    border-radius: 12px;
+    width: 204px;
+    height: 270px;
+    box-shadow: 0 4px 36px 0 rgba(0, 0, 0, 0.02);
+    background: var(--white);
+    padding: 14px 18px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    & button {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.25;
+        color: var(--gray);
+    }
+    & button:hover {
+        color: var(--main);
+    }
+}
+
+.shortUl {
+    height: 190px;
+}
+
+.divForLists {
+    position: relative;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.li {
+    & button {
+        color: var(--main);
+    }
+}
+
+.ul::-webkit-scrollbar {
+    width: 24px;
+}
+
+
+.ul::-webkit-scrollbar-track {
+opacity: 0;
+}
+
+
+.ul::-webkit-scrollbar-thumb {
+    background: var(--gray-light);
+    cursor: pointer;
+    border-radius: 30px;
+    border: 8px solid var(--white);
+}

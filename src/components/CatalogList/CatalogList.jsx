@@ -1,6 +1,6 @@
 const CatalogList = () => {
     return (
-        <div>CatalogList</div>
+        <ul></ul>
     )
 }
 

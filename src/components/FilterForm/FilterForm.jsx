@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { selectFilters } from "../../redux/filters/selectors.js";
@@ -6,7 +6,9 @@ import { useState } from "react";
 import { selectCarBrands, selectCarPrice } from "../../redux/cars/selectors.js";
 import s from "./FilterForm.module.css";
 import { AnimatePresence, motion } from "framer-motion";
-import { setFilters } from "../../redux/filters/slice.js";
+import { resetFilters, setFilters } from "../../redux/filters/slice.js";
+import { fetchAllCars, fetchCarsWithParams } from "../../redux/cars/operations.js";
+import NumberField from "../NumberField/NumberField.jsx";
 
 const variants = {
     hidden: { opacity: 0, y: -10 },
@@ -21,8 +23,6 @@ const FilterForm = () => {
     const {brand, rentalPrice, minMileage, maxMileage} = useSelector(selectFilters);
     const carBrands = useSelector(selectCarBrands);
     const carsPriceArray = useSelector(selectCarPrice);
-    const [carBrand, setCarBrand] = useState(brand ?? "Choose a brand");
-    const [rentalCarPrice, setRentalCarPrice] = useState(rentalPrice ?? "Choose a price");
     const initialValues = {
         brand: brand ?? "",
         rentalPrice: rentalPrice ?? "",
@@ -32,10 +32,12 @@ const FilterForm = () => {
     const validationSchema = Yup.object({
         minMileage: Yup.number()
             .typeError('Enter a number')
-            .min(0, 'Value must be greater than 0'),
+            .min(999, 'Value must be greater')
+            .max(100000, 'Too much'),
         maxMileage: Yup.number()
             .typeError('Enter a number')
-            .min(0, 'Value must be greater than 0'),
+            .min(999, 'Value must be greater')
+            .max(100000, 'Too much'),
         });
         const normalizeValues = (values) => {
             return Object.fromEntries(
@@ -45,42 +47,36 @@ const FilterForm = () => {
                 ])
             );
             };          
-            const onSubmit = (values) => {
-                const updatedValues = {
-                    ...values,
-                    brand: carBrand !== "Choose a brand" ? carBrand : values.brand,
-                    rentalPrice: rentalCarPrice !== "Choose a price" ? rentalCarPrice : values.rentalPrice,
-                };
-                const payload = normalizeValues(updatedValues);
-                console.log('Нормализованные значения формы:', payload);
-                dispatch(setFilters(payload));
-                // sendPayloadToBackend(payload);
-            };
+        const onSubmit = (values) => {
+            const payload = normalizeValues(values);
+            dispatch(setFilters(payload));
+            dispatch(fetchCarsWithParams(payload));
+        };              
         const carBrandsIsVisible = () => {
             setCarBrandsList(!carBrandsList);
         };
-        const onCarBrandClick = (brand) => {
-            setCarBrand(brand);
-            setCarBrandsList(!carBrandsList);
-        }
         const carPriceIsVisible = () => {
             setCarPriceList(!carPriceList);
         };
-        const onCarPriceClick = (price) => {
-            setRentalCarPrice(price);
-            setCarPriceList(!carPriceList);
+        const onHandleClear = async () => {
+            await dispatch(resetFilters());
+            dispatch(fetchAllCars());
+            sessionStorage.removeItem('filters');
         }
     return (
         <>
         <Formik
         initialValues={initialValues}
+        enableReinitialize
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         >
+            {({ values, setFieldValue, resetForm }) => (
             <Form className={s.form}>
                 <div className={s.divForLists}>
                     <p>Car brand</p>
-                    <span onClick={carBrandsIsVisible} className={s.brandSpan}>{carBrand}
+                    <span onClick={carBrandsIsVisible} className={s.brandSpan}>
+                    {values.brand || "Choose a brand"}
                     <svg width={16} height={16} className={carBrandsList ? s.svg : ""}>
                         <use href="/src/assets/sprite.svg#icon-Property-1Default-1"></use>
                     </svg>
@@ -96,12 +92,12 @@ const FilterForm = () => {
                         className={s.ul}>
                         {carBrands.map((car) => {
                             let activeCar = false;
-                            if (carBrand === car) {
+                            if (values.brand === car) {
                                 activeCar = true;
                             }
                             return (
                                 <li className={activeCar ? s.li : ""} key={car}>
-                                    <button type="button" onClick={() => onCarBrandClick(car)}>{car}</button>
+                                    <button type="button" onClick={() => {carBrandsIsVisible(); setFieldValue("brand", car)}}>{car}</button>
                                 </li>
                             )
                         })}
@@ -110,7 +106,8 @@ const FilterForm = () => {
                 </div>
                 <div className={s.divForLists}>
                     <p>Price/ 1 hour</p>
-                    <span onClick={carPriceIsVisible} className={s.brandSpan}>{rentalCarPrice}
+                    <span onClick={carPriceIsVisible} className={s.brandSpan}>
+                    {values.rentalPrice ? `To $${values.rentalPrice}` : "Choose a price"}
                     <svg width={16} height={16} className={carPriceList ? s.svg : ""}>
                         <use href="/src/assets/sprite.svg#icon-Property-1Default-1"></use>
                     </svg>
@@ -126,12 +123,12 @@ const FilterForm = () => {
                     className={`${s.ul} ${s.shortUl}`}>
                     {carsPriceArray.map((price) => {
                         let activePrice = false;
-                        if (rentalCarPrice === price) {
+                        if (values.rentalPrice === price) {
                             activePrice = true;
                         }
                         return (
                             <li className={activePrice ? s.li : ""} key={price}>
-                                <button type="button" onClick={() => onCarPriceClick(price)}>{price}</button>
+                                <button type="button" onClick={() => {carPriceIsVisible(); setFieldValue("rentalPrice", price)}}>{price}</button>
                             </li>
                         )
                     })}
@@ -141,12 +138,20 @@ const FilterForm = () => {
                 <div>
                     <p>Сar mileage / km</p>
                     <div className={s.priceDiv}>
-                        <label className={s.minLabel}>From<Field type="number" name="minMileage"/></label>
-                        <label className={s.maxLabel}>To<Field type="number" name="maxMileage"/></label>
+                        <label className={s.minLabel}>
+                            From
+                            <NumberField name="minMileage" />
+                        </label>
+                        <label className={s.maxLabel}>
+                            To
+                            <NumberField name="maxMileage" />
+                        </label>
                     </div> 
                 </div>
                 <button type="submit" className={s.searchBtn}>Search</button>
+                <button type="reset" className={`${s.searchBtn} ${s.clearButton}`} onClick={() => {onHandleClear(); resetForm();}}>Clear</button>
             </Form>
+            )}
         </Formik>
         </>
     )

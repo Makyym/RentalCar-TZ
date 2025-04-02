@@ -83,6 +83,7 @@
 
 .priceDiv {
     display: flex;
+    position: relative;
 }
 
 .searchBtn {
@@ -103,6 +104,14 @@
 
 .searchBtn:hover {
     background-color: var(--button-hover);
+}
+
+.clearButton {
+    width: 120px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ul {
@@ -142,20 +151,24 @@
     position: relative;
 }
 
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type='number'] {
-    -moz-appearance: textfield;
-}
-
 .li {
     & button {
         color: var(--main);
     }
+}
+
+.errorMessage {
+    position: absolute;
+    color: red;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.33;
+    left: 24px;
+    top: 48px;
+}
+
+.priceMessage {
+    left: 185px;
 }
 
 .ul::-webkit-scrollbar {
@@ -173,4 +186,14 @@ opacity: 0;
     cursor: pointer;
     border-radius: 30px;
     border: 8px solid var(--white);
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
 }

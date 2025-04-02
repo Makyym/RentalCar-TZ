@@ -10,6 +10,7 @@
 	--button-hover: #0b44cd;
   --font-family: "Manrope", sans-serif;
   --second-family: "Inter", sans-serif;
+  animation: pageTransition 0.5s ease-in-out;
 }
 
 body {
@@ -17,6 +18,10 @@ body {
   justify-content: center;
   min-height: 100vh;
   margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 ul {
@@ -57,4 +62,15 @@ html::-webkit-scrollbar-track {
 }
 html::-webkit-scrollbar-thumb {
   display: none;
+}
+
+@keyframes pageTransition {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

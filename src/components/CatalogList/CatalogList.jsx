@@ -6,10 +6,10 @@ import s from "./CatalogList.module.css";
 
 const CatalogList = () => {
     const dispatch = useDispatch();
+    const cars = useSelector(selectAllCars);
     useEffect(() => {
         dispatch(fetchAllCars());
     }, [dispatch]);
-    const cars = useSelector(selectAllCars);
     return (
         <ul className={s.list}>
             {cars.map((car) => {

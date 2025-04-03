@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllCars, fetchCarBrands, fetchCarsWithParams } from "./operations.js";
+import { fetchCarBrands, fetchCarsWithParams } from "./operations.js";
 
 
 const initialState = {
@@ -33,18 +33,18 @@ const slice = createSlice({
                 state.isError = null;
                 state.carBrands = payload;
             })
-            .addCase(fetchAllCars.pending, handlePending)
-            .addCase(fetchAllCars.rejected, handleRejected)
-            .addCase(fetchAllCars.fulfilled, (state, {payload}) => {
-                state.isLoading = false;
-                state.isError = null;
-                state.carsArray = payload;
-            })
             .addCase(fetchCarsWithParams.pending, handlePending)
             .addCase(fetchCarsWithParams.rejected, handleRejected)
             .addCase(fetchCarsWithParams.fulfilled, (state, {payload}) => {
                 state.isLoading = false;
                 state.isError = null;
+                if (payload.page > 1) {
+                    const newUniqueCars = payload.cars.filter(car => {
+                        return !state.carsArray.some(existingCar => existingCar.id === car.id);
+                    });
+                    state.carsArray.push(...newUniqueCars);
+                    return;
+                }                
                 state.carsArray = payload.cars;
             })
         },

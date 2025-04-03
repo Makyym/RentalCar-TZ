@@ -1,67 +1,41 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 124px;
+    position: relative;
+}
+
 .list {
     display: flex;
     flex-wrap: wrap;
     gap: 48px 32px;
     justify-content: center;
-    margin-bottom: 80px;
 }
 
 .li {
     display: flex;
     flex-direction: column;
-    width: 276px;
-    & img {
-        width: 276px;
-        height: 268px;
-        border-radius: 14px;
-        object-fit: cover;
-        margin-bottom: 16px;
-    }
+    width: 320px;
 }
 
-.textDiv {
+.btn {
+    margin-top: 80px;
+    border: 1px solid var(--button);
+    border-radius: 12px;
+    width: 156px;
+    height: 44px;
     display: flex;
-    flex-wrap: wrap;
-    row-gap: 8px;
-    margin-bottom: 28px;
+    align-items: center;
+    justify-content: center;
     font-weight: 500;
     font-size: 16px;
     line-height: 1.25;
     color: var(--main);
-    & span {
-        color: var(--button);
-    }
-}
-
-.rentPrice {
-    margin-left: auto;
-    margin-right: 11px;
-}
-
-.generalInfo {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 1.33;
-    color: var(--gray);
-}
-
-.btn {
-    border-radius: 12px;
-    width: 276px;
-    height: 44px;
-    background-color: var(--button);
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.25;
-    color: var(--white);
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease-in-out;
+    background-color: transparent;
+    transition: border 0.3s ease-in-out;
 }
 
 .btn:hover {
-    background-color: var(--button-hover);
+    border: 1px solid var(--button-hover);
 }

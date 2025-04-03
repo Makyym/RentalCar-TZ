@@ -74,3 +74,8 @@ html::-webkit-scrollbar-thumb {
     transform: scale(1);
   }
 }
+
+.loader {
+  bottom: 64px;
+  position: absolute;
+}

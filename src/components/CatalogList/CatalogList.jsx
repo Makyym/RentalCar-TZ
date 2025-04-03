@@ -1,47 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllCars } from "../../redux/cars/operations.js";
+import { fetchCarsWithParams } from "../../redux/cars/operations.js";
 import { useEffect } from "react";
-import { selectAllCars } from "../../redux/cars/selectors.js";
+import { selectAllCars, selectIsLoading } from "../../redux/cars/selectors.js";
 import s from "./CatalogList.module.css";
+import { selectFilters, selectTotalPages } from "../../redux/filters/selectors.js";
+import CatalogItem from "../CatalogItem/CatalogItem.jsx";
+import { incrementPage } from "../../redux/filters/slice.js";
+import Loader from "../Loader/Loader.jsx";
 
 const CatalogList = () => {
     const dispatch = useDispatch();
     const cars = useSelector(selectAllCars);
+    const filters = useSelector(selectFilters);
+    const isLoading = useSelector(selectIsLoading);
+    const {page} = filters;
+    const totalPages = useSelector(selectTotalPages);
     useEffect(() => {
-        dispatch(fetchAllCars());
-    }, [dispatch]);
+        dispatch(fetchCarsWithParams(filters));
+    }, [dispatch, filters]);
+    const handleClick = () => {
+        dispatch(incrementPage());
+    };
     return (
-        <ul className={s.list}>
-            {cars.map((car) => {
-                const {
-                    brand,
-                    address,
-                    year,
-                    model,
-                    rentalPrice,
-                    type,
-                    mileage,
-                    rentalCompany,
-                    id,
-                    img,
-                    description,
-                } = car;
-                const addressParts = address.split(",").map(part => part.trim());
-                const city = addressParts[addressParts.length - 2];
-                const country = addressParts[addressParts.length - 1];
-                return (
-                    <li key={id} className={s.li}>
-                        <img src={img} alt={description} />
-                        <div className={s.textDiv}>
-                            <p>{brand} <span>{model}</span>, {year}</p>
-                            <p className={s.rentPrice}>${rentalPrice}</p>
-                            <p className={s.generalInfo}>{city} | {country} | {rentalCompany} |<br/>{type} | {mileage}</p>
-                        </div>
-                        <button type="button" className={s.btn}>Read more</button>
-                    </li>
-                )
-            })}
-        </ul>
+        <div className={s.wrapper}>
+            <ul className={s.list}>
+                {cars.map((car) => {
+                    return <li key={car.id} className={s.li}>
+                                <CatalogItem data={car}/>
+                            </li>;
+                        }
+                    )
+                }
+            </ul>
+            {isLoading && <Loader />}
+            {page === totalPages ? <></> : <button type="button" className={s.btn} onClick={handleClick}>Load more</button>}
+        </div>
     )
 }
 

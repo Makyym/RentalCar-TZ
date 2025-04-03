@@ -7,7 +7,7 @@ import { selectCarBrands, selectCarPrice } from "../../redux/cars/selectors.js";
 import s from "./FilterForm.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import { resetFilters, setFilters } from "../../redux/filters/slice.js";
-import { fetchAllCars, fetchCarsWithParams } from "../../redux/cars/operations.js";
+import { fetchCarsWithParams } from "../../redux/cars/operations.js";
 import NumberField from "../NumberField/NumberField.jsx";
 
 const variants = {
@@ -31,38 +31,53 @@ const FilterForm = () => {
     };
     const validationSchema = Yup.object({
         minMileage: Yup.number()
-            .typeError('Enter a number')
-            .min(999, 'Value must be greater')
-            .max(100000, 'Too much'),
+        .transform((value, originalValue) => {
+            if (typeof originalValue === 'string' && originalValue.trim() === '') {
+                return null;
+            }
+            return value;
+        })
+        .nullable()
+        .typeError('Enter a number')
+        .min(999, 'Value must be greater')
+        .max(100000, 'Too much'),
         maxMileage: Yup.number()
-            .typeError('Enter a number')
-            .min(999, 'Value must be greater')
-            .max(100000, 'Too much'),
-        });
-        const normalizeValues = (values) => {
-            return Object.fromEntries(
-                Object.entries(values).map(([key, value]) => [
-                key,
-                (typeof value === 'string' && value.trim() === '') ? null : value,
-                ])
-            );
-            };          
-        const onSubmit = (values) => {
-            const payload = normalizeValues(values);
-            dispatch(setFilters(payload));
-            dispatch(fetchCarsWithParams(payload));
-        };              
-        const carBrandsIsVisible = () => {
-            setCarBrandsList(!carBrandsList);
-        };
-        const carPriceIsVisible = () => {
-            setCarPriceList(!carPriceList);
-        };
-        const onHandleClear = async () => {
-            await dispatch(resetFilters());
-            dispatch(fetchAllCars());
-            sessionStorage.removeItem('filters');
-        }
+        .transform((value, originalValue) => {
+            if (typeof originalValue === 'string' && originalValue.trim() === '') {
+                return null;
+            }
+            return value;
+        })
+        .nullable()
+        .typeError('Enter a number')
+        .min(999, 'Value must be greater')
+        .max(100000, 'Too much'),
+    }    
+    );
+    const normalizeValues = (values) => {
+        return Object.fromEntries(
+            Object.entries(values).map(([key, value]) => [
+            key,
+            (typeof value === 'string' && value.trim() === '') ? null : value,
+            ])
+        );
+    };          
+    const onSubmit = (values) => {
+        const payload = normalizeValues(values);
+        dispatch(setFilters(payload));
+        dispatch(fetchCarsWithParams(payload));
+    };              
+    const carBrandsIsVisible = () => {
+        setCarBrandsList(!carBrandsList);
+    };
+    const carPriceIsVisible = () => {
+        setCarPriceList(!carPriceList);
+    };
+    const onHandleClear = async () => {
+        await dispatch(resetFilters());
+        dispatch(fetchCarsWithParams());
+        sessionStorage.removeItem('filters');
+    };
     return (
         <>
         <Formik

@@ -14,6 +14,7 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist';
+import createTransform from 'redux-persist/es/createTransform';
 
 const persistConfig = {
     key: 'root',
@@ -22,9 +23,21 @@ const persistConfig = {
     whitelist: ['favoritesCars'],
 };
 
+const removePageTransform = createTransform(
+    (inboundState, key) => {
+        const { page, ...rest } = inboundState;
+        return rest;
+    },
+    (outboundState, key) => {
+        return { ...outboundState, page: 1 };
+    },
+    { whitelist: ['filters'] }
+);  
+
 const filtersPersistConfig = {
     key: 'filters',
     storage: sessionStorage,
+    transforms: [removePageTransform],
 };
 
 const persistedCarsReducer = persistReducer(persistConfig, carsReducer);

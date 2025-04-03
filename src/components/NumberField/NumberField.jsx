@@ -21,7 +21,7 @@ const NumberField = ({ name, ...props }) => {
             type="text"
             />
             {meta.touched && meta.error ? (
-            <span className={s.errorMessage}>{meta.error}</span>
+            <span className={name === "minMileage" ? s.errorMessage : `${s.errorMessage} ${s.priceMessage}`}>{meta.error}</span>
             ) : null}
         </div>
     );

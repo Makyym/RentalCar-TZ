@@ -103,9 +103,14 @@ const FilterForm = () => {
     const carPriceIsVisible = () => {
         setCarPriceList(!carPriceList);
     };
+    // const isFiltersEmpty =
+    // (!brand || brand.trim() === "") &&
+    // (!rentalPrice || rentalPrice.trim() === "") &&
+    // (!minMileage || minMileage === "") &&
+    // (!maxMileage || maxMileage === "");
     const isFiltersEmpty =
-    (!brand || brand.trim() === "") &&
-    (!rentalPrice || rentalPrice.trim() === "") &&
+    (!brand || String(brand).trim() === "") &&
+    (!rentalPrice || String(rentalPrice).trim() === "") &&
     (!minMileage || minMileage === "") &&
     (!maxMileage || maxMileage === "");
     const onHandleClear = async () => {

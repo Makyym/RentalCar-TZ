@@ -3,6 +3,7 @@ import s from "./CatalogItem.module.css"
 import { selectFavoritesCars } from "../../redux/cars/selectors.js";
 import { addFavoriteCar, deleteFavoriteCar } from "../../redux/cars/slice.js";
 import { Link, useLocation } from "react-router-dom";
+import sprite from "../../assets/sprite.svg";
 
 const CatalogItem = ({data}) => {
     const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const CatalogItem = ({data}) => {
         className={isFavorite ? `${s.svg} ${s.svgColored}` : s.svg}
         onClick={isFavorite ? handleRemove : handleAdd}
         >
-            <use href={`/src/assets/sprite.svg#icon-heart`} />
+            <use href={`${sprite}#icon-heart`} />
         </svg>
             <img src={img} alt={description} className={s.img}/>
             <div className={s.textDiv}>

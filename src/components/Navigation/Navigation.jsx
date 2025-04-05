@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { NavLink } from "react-router-dom"
-import s from "./Navigation.module.css"
+import { NavLink } from "react-router-dom";
+import s from "./Navigation.module.css";
+import sprite from "../../assets/sprite.svg";
 
 const activeLink = ({ isActive }) => {
     return clsx(s.link, isActive && s.active);
@@ -12,7 +13,7 @@ const Navigation = () => {
             <div className={s.navPanel}>
                 <h3>
                     <svg width={104} height={16}>
-                        <use href="/src/assets/sprite.svg#icon-Logo"></use>
+                        <use href={`${sprite}#icon-Logo`}></use>
                     </svg>
                 </h3>
                 <nav className={s.nav}>

@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { resetFilters, setFilters } from "../../redux/filters/slice.js";
 import { fetchCarsWithParams } from "../../redux/cars/operations.js";
 import NumberField from "../NumberField/NumberField.jsx";
+import sprite from "../../assets/sprite.svg";
 
 const variants = {
     hidden: { opacity: 0, y: -10 },
@@ -128,7 +129,7 @@ const FilterForm = () => {
                     <span onClick={carBrandsIsVisible} className={s.brandSpan}>
                     {values.brand || "Choose a brand"}
                     <svg width={16} height={16} className={carBrandsList ? s.svg : ""}>
-                        <use href="/src/assets/sprite.svg#icon-Property-1Default-1"></use>
+                        <use href={`${sprite}#icon-Property-1Default-1`}></use>
                     </svg>
                     </span>
                     <AnimatePresence>
@@ -159,7 +160,7 @@ const FilterForm = () => {
                     <span onClick={carPriceIsVisible} className={s.brandSpan}>
                     {values.rentalPrice ? `To $${values.rentalPrice}` : "Choose a price"}
                     <svg width={16} height={16} className={carPriceList ? s.svg : ""}>
-                        <use href="/src/assets/sprite.svg#icon-Property-1Default-1"></use>
+                        <use href={`${sprite}#icon-Property-1Default-1`}></use>
                     </svg>
                     </span>
                     <AnimatePresence>

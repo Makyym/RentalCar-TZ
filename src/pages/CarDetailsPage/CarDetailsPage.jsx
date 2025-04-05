@@ -61,7 +61,12 @@ const CarDetailsPage = () => {
                     <p>Id: {extractNumber(img)}</p>
                 </div>
                 <div className={s.addressDiv}>
-                    <p>{city}, {country}</p>
+                    <p>
+                        <svg width={16} height={16}>
+                            <use href={`${sprite}#icon-Location`}></use>
+                        </svg>
+                        {city}, {country}
+                    </p>
                     <p>Mileage: {formattedMileage} km</p>
                 </div>
                 <h2 className={`${s.mainTitle} ${s.colored}`}>${rentalPrice}</h2>

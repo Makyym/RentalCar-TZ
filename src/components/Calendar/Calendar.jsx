@@ -1,4 +1,5 @@
 import s from "./Calendar.module.css";
+import sprite from "../../assets/sprite.svg";
 
 const Calendar = ({
     headerTitle,
@@ -23,7 +24,7 @@ const Calendar = ({
                 <p>{headerTitle}</p>
                 <button onClick={onNext} type="button">
                     <svg width={24} height={24} className={`${s.svgLeft} ${s.svgRight}`}>
-                        <use href="/src/assets/sprite.svg#icon-Property-1Default-1"></use>
+                        <use href={`${sprite}#icon-Property-1Default-1`}></use>
                     </svg>
                 </button>
                 </div>

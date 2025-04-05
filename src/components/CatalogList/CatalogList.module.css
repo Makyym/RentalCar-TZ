@@ -40,3 +40,9 @@
 .btn:hover {
     border: 1px solid var(--button-hover);
 }
+
+.loader {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}

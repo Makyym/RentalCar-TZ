@@ -1,4 +1,4 @@
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from 'yup';
 import { selectFilters } from "../../redux/filters/selectors.js";
@@ -30,30 +30,58 @@ const FilterForm = () => {
         maxMileage: maxMileage ?? "",
     };
     const validationSchema = Yup.object({
-        minMileage: Yup.number()
-        .transform((value, originalValue) => {
-            if (typeof originalValue === 'string' && originalValue.trim() === '') {
+        brand: Yup.string()
+            .transform((value, originalValue) => {
+                if (typeof originalValue === 'string' && originalValue.trim() === '') {
                 return null;
-            }
-            return value;
-        })
-        .nullable()
-        .typeError('Enter a number')
-        .min(999, 'Value must be greater')
-        .max(100000, 'Too much'),
-        maxMileage: Yup.number()
-        .transform((value, originalValue) => {
-            if (typeof originalValue === 'string' && originalValue.trim() === '') {
+                }
+                return value;
+            }),
+            rentalPrice: Yup.string()
+            .transform((value, originalValue) => {
+                if (typeof originalValue === 'string' && originalValue.trim() === '') {
                 return null;
-            }
-            return value;
+                }
+                return value;
+            }),
+            minMileage: Yup.number()
+            .transform((value, originalValue) => {
+                if (typeof originalValue === 'string' && originalValue.trim() === '') {
+                return null;
+                }
+                return value;
+            })
+            .nullable()
+            .typeError('Enter a number')
+            .min(999, 'Value must be greater')
+            .max(100000, 'Too much'),
+            maxMileage: Yup.number()
+            .transform((value, originalValue) => {
+                if (typeof originalValue === 'string' && originalValue.trim() === '') {
+                return null;
+                }
+                return value;
+            })
+            .nullable()
+            .typeError('Enter a number')
+            .min(999, 'Value must be greater')
+            .max(100000, 'Too much'),
         })
-        .nullable()
-        .typeError('Enter a number')
-        .min(999, 'Value must be greater')
-        .max(100000, 'Too much'),
-    }    
-    );
+        .test(
+            "at-least-one-field",
+            "Please fill at least one field",
+            function (values) {
+            const { createError } = this;
+            if (!values) return createError({ message: "Please fill at least one field" });
+            const isAnyFieldFilled = Object.values(values).some((value) =>
+                typeof value === 'string' ? value.trim() !== "" : Boolean(value)
+            );
+            if (!isAnyFieldFilled) {
+                return createError({ path: "brand", message: "Please fill at least one field" });
+            }
+            return true;
+            }
+        );
     const normalizeValues = (values) => {
         return Object.fromEntries(
             Object.entries(values).map(([key, value]) => [
@@ -61,19 +89,26 @@ const FilterForm = () => {
             (typeof value === 'string' && value.trim() === '') ? null : value,
             ])
         );
-    };          
+    };
     const onSubmit = (values) => {
         const payload = normalizeValues(values);
+        console.log(values);
         dispatch(setFilters(payload));
         dispatch(fetchCarsWithParams(payload));
-    };              
+    };
     const carBrandsIsVisible = () => {
         setCarBrandsList(!carBrandsList);
     };
     const carPriceIsVisible = () => {
         setCarPriceList(!carPriceList);
     };
+    const isFiltersEmpty =
+    (!brand || brand.trim() === "") &&
+    (!rentalPrice || rentalPrice.trim() === "") &&
+    (!minMileage || minMileage === "") &&
+    (!maxMileage || maxMileage === "");
     const onHandleClear = async () => {
+        if (isFiltersEmpty) return;
         await dispatch(resetFilters());
         dispatch(fetchCarsWithParams());
         sessionStorage.removeItem('filters');
@@ -165,6 +200,7 @@ const FilterForm = () => {
                 </div>
                 <button type="submit" className={s.searchBtn}>Search</button>
                 <button type="reset" className={`${s.searchBtn} ${s.clearButton}`} onClick={() => {onHandleClear(); resetForm();}}>Clear</button>
+                <ErrorMessage name="brand" component="span" className={s.error} />
             </Form>
             )}
         </Formik>

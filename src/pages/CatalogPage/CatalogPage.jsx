@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import CatalogList from "../../components/CatalogList/CatalogList.jsx"
 import FilterForm from "../../components/FilterForm/FilterForm.jsx"
 import { useDispatch } from "react-redux"

@@ -1,10 +1,15 @@
 .container {
+    position: absolute;
     background-color: var(--white);
     display: flex;
     flex-direction: column;
     font-family: var(--second-family);
     z-index: 1;
     width: 274px;
+    height: 272px;
+    left: 1px;
+    top: 1px;
+    border-radius: 12px;
 }
 
 .content {

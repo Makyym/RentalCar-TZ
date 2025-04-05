@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectChosenCar } from "../../redux/cars/selectors.js";
-import { useEffect } from "react";
+import { selectChosenCar, selectIsLoading } from "../../redux/cars/selectors.js";
+import { useEffect, useLayoutEffect } from "react";
 import { fetchCarById } from "../../redux/cars/operations.js";
-import { Formik, Form, Field } from "formik";
 import s from "./CarDetailsPage.module.css";
 import sprite from "../../assets/sprite.svg";
-import Calendar from "../../components/Calendar/Calendar.jsx";
-import CustomDateInput from "../../components/CustomDateInput/CustomDateInput.jsx";
+import ReserveForm from "../../components/ReserveForm/ReserveForm.jsx";
+import Loader from "../../components/Loader/Loader.jsx";
 
 const extractNumber = (url) => {
     const lastPart = url.split("/").pop();
@@ -19,14 +18,8 @@ const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
-const initialValues = {
-    name: '',
-    email: '',
-    date: null,
-    comment: ''
-};
-
 const CarDetailsPage = () => {
+    const isLoading = useSelector(selectIsLoading);
     const { carId } = useParams();
     const car = useSelector(selectChosenCar);
     const isEmpty = Object.keys(car).length === 0;
@@ -34,14 +27,13 @@ const CarDetailsPage = () => {
     useEffect(() => {
         dispatch(fetchCarById(carId));
     }, [dispatch]);
-    if (isEmpty) return;
+    if (isEmpty) return <div className={s.loader}><Loader/></div>;
     const {
         img,
         description,
         model,
         brand,
         year,
-        id,
         address,
         mileage,
         rentalPrice,
@@ -57,29 +49,11 @@ const CarDetailsPage = () => {
     const country = addressParts[addressParts.length - 1];
     const formattedMileage = mileage.toLocaleString('uk-UA').replace(/\u00A0/g, " ");
     const allFunctionalities = [...accessories, ...functionalities];
-    const handleSubmit = (values) => {
-        console.log(values);
-    }
     return (
         <div className={s.wrapper}>
             <div>
                 <img src={img} alt={description} className={s.img}/>
-                <Formik
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-                >
-                    <Form className={s.formDiv}>
-                        <h3 className={s.sectionTitle}>Book your car now</h3>
-                        <p className={s.formText}>Stay connected! We are always ready to help you.</p>
-                        <div className={s.form}>
-                            <Field type="text" placeholder="Name*" name="name" className={s.inputs}/>
-                            <Field type="text" placeholder="Email*" name="email" className={s.inputs}/>
-                            <CustomDateInput name="date" placeholder="Booking date" customStyle={`${s.inputs} ${s.customCursor}`}/>
-                            <Field as="textarea" placeholder="Comment" name="comment" className={`${s.inputs} ${s.textArea}`} />
-                        </div>
-                        <button type="submit" className={s.btn}>Send</button>
-                    </Form>
-                </Formik>
+                <ReserveForm carId={carId}/>
             </div>
             <div className={s.divDescription}>
                 <div className={s.mainTitleDiv}>

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react'
 import './App.css'
 import Navigation from './components/Navigation/Navigation.jsx';
 import { Route, Routes, useLocation } from 'react-router-dom';
@@ -21,7 +21,8 @@ function App() {
   return (
     <>
     <Navigation />
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" 
+    >
       <motion.div
       initial="hidden"
       animate="enter"

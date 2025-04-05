@@ -23,19 +23,35 @@ const CatalogList = () => {
     };
     return (
         <div className={s.wrapper}>
-            <ul className={s.list}>
-                {cars.map((car) => {
-                    return <li key={car.id} className={s.li}>
-                                <CatalogItem data={car}/>
-                            </li>;
-                        }
-                    )
-                }
-            </ul>
-            {isLoading && <Loader />}
-            {page === totalPages ? <></> : <button type="button" className={s.btn} onClick={handleClick}>Load more</button>}
+            {isLoading && page === 1 ? (
+                <div className={s.loader}>
+                <Loader />
+                </div>
+            ) : !isLoading && cars.length === 0 ? (
+                <h2>Something went wrong, try to change search params or reload page.</h2>
+            ) : (
+                <>
+                <ul className={s.list}>
+                    {cars.map((car) => (
+                    <li key={car.id} className={s.li}>
+                        <CatalogItem data={car} />
+                    </li>
+                    ))}
+                </ul>
+                {isLoading && page > 1 && (
+                    <div className={s.loader}>
+                    <Loader />
+                    </div>
+                )}
+                {page === totalPages ? null : (
+                    <button type="button" className={s.btn} onClick={handleClick}>
+                    Load more
+                    </button>
+                )}
+                </>
+            )}
         </div>
-    )
+    );
 }
 
 export default CatalogList

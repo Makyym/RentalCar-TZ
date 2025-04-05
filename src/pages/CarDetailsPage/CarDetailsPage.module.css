@@ -33,74 +33,6 @@
     color: var(--main);
 }
 
-.formDiv {
-    padding: 32px;
-    border: 1px solid var(--gray-light);
-    border-radius: 10px;
-}
-
-.formText {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.25;
-    color: var(--gray);
-    margin-top: 8px;
-    margin-bottom: 24px;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.btn {
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 156px;
-    height: 44px;
-    background-color: var(--button);
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.25;
-    color: var(--white);
-    margin: 0 auto;
-    border: none;
-    outline: none;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.btn:hover {
-    background-color: var(--button-hover);
-}
-
-.inputs {
-    border-radius: 12px;
-    padding: 12px 20px;
-    width: 576px;
-    height: 48px;
-    background: var(--inputs);
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.25;
-    color: var(--gray);
-    border: none;
-    outline: none;
-    text-align: left;
-}
-
-.inputs::placeholder {
-    color: var(--gray);
-}
-
-.textArea {
-    height: 88px;
-    resize: none;
-}
-
 .mainTitleDiv {
     display: flex;
     gap: 16px;
@@ -134,10 +66,6 @@
     gap: 110px;
 }
 
-.customCursor {
-    cursor: pointer;
-}
-
 .ul {
     display: flex;
     flex-direction: column;
@@ -161,4 +89,10 @@
 .svg {
     margin-right: 8px;
     fill: var(--main);
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
 }

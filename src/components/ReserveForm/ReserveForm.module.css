@@ -1,0 +1,93 @@
+.formDiv {
+    padding: 32px;
+    border: 1px solid var(--gray-light);
+    border-radius: 10px;
+}
+
+.sectionTitle {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.2;
+    color: var(--main);
+}
+
+.formText {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--gray);
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.inputs {
+    border-radius: 12px;
+    padding: 12px 20px;
+    width: 576px;
+    height: 48px;
+    background: var(--inputs);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--gray);
+    border: none;
+    outline: none;
+    text-align: left;
+}
+
+.inputs::placeholder {
+    color: var(--gray);
+}
+
+.textArea {
+    height: 88px;
+    resize: none;
+}
+
+.customCursor {
+    cursor: pointer;
+}
+
+.btn {
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 156px;
+    height: 44px;
+    background-color: var(--button);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--white);
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+    background-color: var(--button-hover);
+}
+
+.requiredDiv {
+    position: relative;
+}
+
+.error {
+    position: absolute;
+    width: 100%;
+    top: 102%;
+    left: 20px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 1.25;
+    color: red;
+}

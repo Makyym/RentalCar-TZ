@@ -28,17 +28,18 @@ const CalendarLogic = ({ selectedDate, onSelectDate }) => {
         const cells = [];
         let day = startDate;
         while (day <= endDate) {
-        cells.push({
-            day: format(day, 'd'),
-            date: day,
-            isCurrentMonth: isSameMonth(day, monthStart),
-            isSelected: selectedDate ? isSameDay(day, selectedDate) : false,
-            disabled: isBefore(day, todayStart),
-        });
-        day = addDays(day, 1);
+            const dateString = format(day, 'MMM dd yyyy');
+            cells.push({
+                day: format(day, 'd'),
+                date: dateString,
+                isCurrentMonth: isSameMonth(day, monthStart),
+                isSelected: selectedDate ? selectedDate === dateString : false,
+                disabled: isBefore(day, todayStart),
+            });
+            day = addDays(day, 1);
         }
         return cells;
-    };
+    };      
     const calendarCells = generateCalendarCells();
     const handlePrevMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));

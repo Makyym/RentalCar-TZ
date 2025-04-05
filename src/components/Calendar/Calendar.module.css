@@ -1,0 +1,122 @@
+.container {
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--second-family);
+    z-index: 1;
+    width: 274px;
+}
+
+.content {
+    position: relative;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 12px 10px;
+    & p {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.2;
+        text-align: center;
+        color: var(--main);
+    }
+    & button {
+        all: unset;
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.frameSvg {
+    position: absolute;
+    fill: transparent;
+    top: -10px;
+    left: 0;
+    width: auto;
+    z-index: 0;
+}  
+
+.svgLeft {
+    fill: var(--button);
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: fill 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.svgLeft:hover {
+    fill: var(--button-hover);
+}
+
+.svgRight {
+    transform: rotate(-90deg);
+}
+
+.daysUl {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px 8px;
+    border-bottom: 1px solid var(--button);
+    & li {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: center;
+        color: var(--gray);
+        text-transform: uppercase;
+        height: 14px;
+    }
+}
+
+.monthUl {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+    height: 204px;
+    & li {
+        width: 36px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 1.2;
+        cursor: pointer;
+    }
+}
+
+.currentDay {
+    color: var(--main);
+}
+
+.currentDay:hover,
+.otherDay:hover {
+    border-radius: 50%;
+    border: 1px solid var(--button-hover);
+}
+
+.otherDay {
+    color: var(--gray);
+}
+
+.selectedDay {
+    border-radius: 32px;
+    width: 36px;
+    height: 32px;
+    background: var(--button);
+    color: var(--inputs);
+}
+
+.disabledDay {
+    pointer-events: none;
+}  
+
+.monthDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

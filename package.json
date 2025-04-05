@@ -17,6 +17,7 @@
     "framer-motion": "^12.6.2",
     "modern-normalize": "^3.0.1",
     "react": "^19.0.0",
+    "react-datepicker": "^8.2.1",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.5.2",
     "react-number-format": "^5.4.3",

@@ -1,0 +1,23 @@
+.datePickerContainer {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.dateInput {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.calendarPopup {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    z-index: 10;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}

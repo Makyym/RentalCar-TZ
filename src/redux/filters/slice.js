@@ -8,8 +8,8 @@ const initialState = {
         minMileage: null,
         maxMileage: null,
         limit: 12,
-        page: 1,
     },
+    page: 1,
     totalPages: null,
 };
 
@@ -18,13 +18,13 @@ const slice = createSlice({
     initialState,
     reducers: {
         setFilters(state, {payload}) {
-        return { ...state, ...payload };
+            state.filters = { ...state.filters, ...payload };
         },
         resetFilters() {
         return initialState;
         },
         incrementPage(state) {
-            state.filters.page += 1;
+            state.page += 1;
         },      
     },
     extraReducers: builder => {

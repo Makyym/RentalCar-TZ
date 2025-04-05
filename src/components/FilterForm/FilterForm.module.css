@@ -115,6 +115,7 @@
 }
 
 .ul {
+    z-index: 999;
     position: absolute;
     top: 72px;
     border: 1px solid var(--inputs);

@@ -93,7 +93,6 @@ const FilterForm = () => {
     };
     const onSubmit = (values) => {
         const payload = normalizeValues(values);
-        console.log(values);
         dispatch(setFilters(payload));
         dispatch(fetchCarsWithParams(payload));
     };
@@ -103,11 +102,6 @@ const FilterForm = () => {
     const carPriceIsVisible = () => {
         setCarPriceList(!carPriceList);
     };
-    // const isFiltersEmpty =
-    // (!brand || brand.trim() === "") &&
-    // (!rentalPrice || rentalPrice.trim() === "") &&
-    // (!minMileage || minMileage === "") &&
-    // (!maxMileage || maxMileage === "");
     const isFiltersEmpty =
     (!brand || String(brand).trim() === "") &&
     (!rentalPrice || String(rentalPrice).trim() === "") &&

@@ -12,13 +12,13 @@ const Calendar = ({
     return (
         <div className={s.content}>
             <svg width={276} height={284} className={s.frameSvg}>
-                    <use href="/src/assets/sprite.svg#icon-background"></use>
+                <use href={`${sprite}#icon-background`}></use>
             </svg>
             <div className={s.container}>
                 <div className={s.header}>
                 <button onClick={onPrev} type="button">
                     <svg width={24} height={24} className={s.svgLeft}>
-                        <use href="/src/assets/sprite.svg#icon-Property-1Default-1"></use>
+                        <use href={`${sprite}#icon-Property-1Default-1`}></use>
                     </svg>
                 </button>
                 <p>{headerTitle}</p>

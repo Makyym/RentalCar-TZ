@@ -38,14 +38,16 @@ const CatalogItem = ({data}) => {
     };
     return (
         <>
-        <svg
-        width={16}
-        height={16}
-        className={isFavorite ? `${s.svg} ${s.svgColored}` : s.svg}
-        onClick={isFavorite ? handleRemove : handleAdd}
-        >
-            <use href={`${sprite}#icon-heart`} />
-        </svg>
+        <button className={s.btnSvg}>
+            <svg
+            width={16}
+            height={16}
+            className={isFavorite ? `${s.svg} ${s.svgColored}` : s.svg}
+            onClick={isFavorite ? handleRemove : handleAdd}
+            >
+                <use href={`${sprite}#icon-heart`} />
+            </svg>
+        </button>
             <img src={img} alt={description} className={s.img}/>
             <div className={s.textDiv}>
                 <p>{brand} <span>{model}</span>, {year}</p>

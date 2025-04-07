@@ -6,11 +6,15 @@
     margin-bottom: 16px;
 }
 
-.svg {
+.btnSvg {
+    all: unset;
     position: absolute;
     top: 16px;
     right: 16px;
     cursor: pointer;
+}
+
+.svg {
     fill: var(--gray);
     transition: fill 0.3s ease-in-out;
 }

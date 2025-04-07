@@ -43,7 +43,7 @@ const CatalogList = () => {
                     <Loader />
                     </div>
                 )}
-                {page === totalPages ? null : (
+                {page === totalPages ? null : (!isLoading &&
                     <button type="button" className={s.btn} onClick={handleClick}>
                     Load more
                     </button>

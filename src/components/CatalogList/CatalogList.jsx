@@ -3,7 +3,7 @@ import { fetchCarsWithParams } from "../../redux/cars/operations.js";
 import { useEffect } from "react";
 import { selectAllCars, selectIsLoading } from "../../redux/cars/selectors.js";
 import s from "./CatalogList.module.css";
-import { selectFilters, selectPageNumber, selectTotalPages } from "../../redux/filters/selectors.js";
+import { selectFilters, selectLimitPerPage, selectPageNumber, selectTotalPages } from "../../redux/filters/selectors.js";
 import CatalogItem from "../CatalogItem/CatalogItem.jsx";
 import { incrementPage } from "../../redux/filters/slice.js";
 import Loader from "../Loader/Loader.jsx";
@@ -14,9 +14,11 @@ const CatalogList = () => {
     const filters = useSelector(selectFilters);
     const isLoading = useSelector(selectIsLoading);
     const page = useSelector(selectPageNumber);
+    const limit = useSelector(selectLimitPerPage);
     const totalPages = useSelector(selectTotalPages);
+    const payload = {...filters, page, limit};
     useEffect(() => {
-        dispatch(fetchCarsWithParams({...filters, page}));
+        dispatch(fetchCarsWithParams(payload));
     }, [dispatch, filters, page]);
     const handleClick = () => {
         dispatch(incrementPage());

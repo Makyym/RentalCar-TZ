@@ -95,7 +95,7 @@ const FilterForm = () => {
         const payload = normalizeValues(values);
         payload.page = 1;
         dispatch(setFilters(payload));
-        dispatch(fetchCarsWithParams(payload));
+        // dispatch(fetchCarsWithParams(payload));
     };
     const carBrandsIsVisible = () => {
         setCarBrandsList(!carBrandsList);

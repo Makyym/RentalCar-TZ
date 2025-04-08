@@ -93,6 +93,7 @@ const FilterForm = () => {
     };
     const onSubmit = (values) => {
         const payload = normalizeValues(values);
+        payload.page = 1;
         dispatch(setFilters(payload));
         dispatch(fetchCarsWithParams(payload));
     };

@@ -7,9 +7,9 @@ const initialState = {
         rentalPrice: null,
         minMileage: null,
         maxMileage: null,
-        limit: 12,
     },
     page: 1,
+    limit: 12,
     totalPages: null,
 };
 
@@ -18,7 +18,9 @@ const slice = createSlice({
     initialState,
     reducers: {
         setFilters(state, {payload}) {
-            state.filters = { ...state.filters, ...payload };
+            const {page, ...rest} = payload;
+            state.filters = rest;
+            state.page = page;
         },
         resetFilters() {
         return initialState;
